@@ -35,6 +35,7 @@ Instructions:
 
     Your code goes here!
      */
+     return fetch(url);
   }
 
   /**
@@ -48,6 +49,23 @@ Instructions:
 
     Your code goes here!
      */
+     // return new Promise((resolve, reject) => {
+      return get(url)
+      .then((response) => {
+        // if(response.status === 200) {
+          // let json = JSON.parse(response);
+          let json = response.json();
+          return json;
+          // resolve(json);
+        // }else {
+        //   let error = response.statusText;
+        //   reject(error);
+        // }
+      });
+      // .catch((error) => {
+      //   reject('Unknown');
+      // });
+     // });
   }
 
   window.addEventListener('WebComponentsReady', function() {
@@ -58,6 +76,18 @@ Instructions:
 
     Your code goes here too!
      */
-    // getJSON('../data/earth-like-results.json')
+    getJSON('../data/earth-like-results.json')
+    .then((response) => {
+      console.log(response);
+      addSearchHeader(response.query);
+      return response.results[0];
+    })
+    .then((url) => {
+      console.log(url);
+    })
+    .catch((error) => {
+      console.log(error);
+      addSearchHeader(error);
+    });
   });
 })(document);
