@@ -64,9 +64,82 @@ Hint: you'll probably still need to use .map.
 
       addSearchHeader(response.query);
 
-      response.results.map(function(url) {
-        getJSON(url).then(createPlanetThumb);
+      // let data = response.results.map(function(url) {
+      //    return getJSON(url);
+      // });
+
+      // Promise.all(data)
+      // .then((data) => {
+      //   data.forEach((item) => {
+      //     createPlanetThumb(item);
+      //   });
+      // })
+      // .catch((e) => {
+      //   console.log(e + ' Error retrieving planet data');
+      // });
+      Promise.all(response.results.map((data) => {
+        return getJSON(data);
+      }))
+      .then((data) => {
+        data.forEach((planet) => {
+          createPlanetThumb(planet);
+        });
+      })
+      .catch((e) => {
+        console.log(e + ' Error occurred retrieving planet data');
       });
+    })
+    .catch((e) => {
+      console.log(e);
     });
   });
 })(document);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
